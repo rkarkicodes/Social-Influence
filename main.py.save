@@ -1,0 +1,40 @@
+import sqlite3
+import json
+class SocialInfluence(object):
+    __connection=None
+    __cursor=None
+
+    def __init__(self):
+        self.__connection=sqlite3.connect('Social_Influence.db')
+        self.__cursor=self.__connection.cursor()
+
+
+    def append_tables(self):
+	self.__cursor.execute("CREATE TABLE NODES(NodeId TEXT PRIMARY KEY,Degree INTEGER)")
+        with open('final.json') as file:
+            data=json.load(file)
+            for i in data.keys():
+
+                self.__cursor.execute("CREATE TABLE {}(Neighbours TEXT)".format(i))
+                self.__cursor.execute("INSERT INTO Nodes Values(?,?);",(i,len(data[i])))
+                query="INSERT INTO {}(Neighbours) VALUES(?);".format(i)
+                self.__cursor.executemany(query,[(i,) for i in data[i]])
+		print i
+        	self.__connection.commit()
+
+
+    def influence(self,**options):
+         ## can pass through hop,nodeid as keyword agruments.
+        # self.__cursor.execute("INSERT INTO Nodes VALUES('N132',65)")
+        #self.__cursor.execute("CREATE TABLE {}(Neighbours TEXT)".format("Q12345"))
+        #self.__cursor.execute("SELECT name FROM sqlite_master WHERE Type='table';")
+        #for i in self.__cursor.fetchall():
+
+        a=self.__cursor.execute("SELECT name FROM sqlite_master WHERE Type='table';")
+	for i in a:
+	    print i
+
+
+#SocialInfluence().create_table()
+#SocialInfluence().append_tables()
+SocialInfluence().influence()
