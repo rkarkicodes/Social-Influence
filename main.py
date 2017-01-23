@@ -92,18 +92,18 @@ class SocialInfluence(object):
         ## calculating hops of each node
         all_nodes=self.__cursor.execute("select * from NODES")
         print all_nodes.description[-1]
-        # if hop<len(all_nodes.description)-2:
-        #     print "Currently the database contains information upto {} hops".format(str(len(a.description)-2))
-        #
-        # else:
-        #     for i in range(len(all_nodes.description)-1,hop+1):
-        #         # a=self.__cursor.execute("select * from nodes")
-        #
-        #         print "Currently the database contains information upto {} hops, calculating {} hops..".format(str(len(all_nodes.description)-2),str(i))
-        #         col="{}_hop".format(str(i))
-        #         # print a.fetchall()
-        #         self.hop_query(col,all_nodes)
-        #         print col
+        if hop<len(all_nodes.description)-2:
+             print "Currently the database contains information upto {} hops".format(str(len(a.description)-2))
+        
+        else:
+             for i in range(len(all_nodes.description)-1,hop+1):
+                 # a=self.__cursor.execute("select * from nodes")
+        
+                 print "Currently the database contains information upto {} hops, calculating {} hops..".format(str(len(all_nodes.description)-2),str(i))
+                 col="{}_hop".format(str(i))
+                 # print a.fetchall()
+                 self.hop_query(col,all_nodes)
+                 print col
 
 
     def hop_query(self,col,all_nodes):
@@ -141,6 +141,6 @@ class SocialInfluence(object):
 
 # SocialInfluence("facebook").append_tables()
 # SocialInfluence().influence()
-SocialInfluence("facebook.db").hops(1)
+#SocialInfluence("facebook.db").hops(1)
 #SocialInfluence().frequency_table("one_hop")
 # SocialInfluence().stats()
